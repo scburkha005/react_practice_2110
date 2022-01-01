@@ -11,7 +11,7 @@
 		and href will hold .maps.googleMaps 
 */
 
-const Country = () => {
+const Country = ({countries, country, setCountries}) => {
 	//Remember to destructure your props here
 	//You'll be destructuring country, setCountries, countries
 
@@ -24,7 +24,12 @@ const Country = () => {
 	}
 
 	return (
-	);
+		<div className="country">
+			<a href={country.maps.googleMaps} target="_blank">{country.name.official}</a>
+			<img src={country.flags.png} />
+			<button onClick={handleDelete}>Delete</button>
+		</div>	
+	)
 }
 
 export default Country;

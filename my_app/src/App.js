@@ -1,4 +1,7 @@
 import './index.css';
+import {useState, useEffect} from 'react'
+import Country from './Country';
+import {Fragment} from 'react'
 //Make sure to import useState, useEffect
 
 /*
@@ -16,6 +19,7 @@ https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibn
 
 const App = () => {
   //Create a state variable to contain all of the countries
+  const [countries, setCountries] = useState([])  
 
   /*
   This will be our fetching function for the different countries
@@ -25,16 +29,16 @@ const App = () => {
   */
   const fetchCountries = async () => {
     //Fetch for the data
-
+    const response = await fetch('https://restcountries.com/v3.1/all');
     //parse the data with the .json() function
-
+    const data = await response.json();
     //call setCountries and place the data within the arguments;
-   
+    setCountries(data)
   }
 
   useEffect(() => {
     //Call your fetchCountries function
-   
+    fetchCountries()
   }, [])
 
   console.log(countries);
@@ -47,6 +51,15 @@ const App = () => {
        * Let's use the countries name as the key instead, this way we apply some good practices in our code
        * If you console.log one of the elements within the fetched countries they should have a name property with a nested object with a property of official
        * So we'll go ahead and use that ... key = country.name.official*/}
+      {
+        countries.map((country) => {
+          return (
+            <Fragment key = {country.name.official}>
+              <Country countries = {countries} setCountries = {setCountries} country = {country}/>
+            </Fragment>
+          )
+        })
+      }
     </div>
   );
 }
